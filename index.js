@@ -5,6 +5,7 @@ const PREFIX = "."
 
 var bot = new Discord.Client();
 var gyms;
+var canadd = ['1169'];
 
 bot.on("ready", function(){
     var data = '';
@@ -45,26 +46,34 @@ bot.on("message", function(message){
                 }
             }
             if(!found){
-                message.channel.send("No matching gym found.  If this gym needs to be added, please use .whereisadd [gym name] [lat,long] ex: .whereisadd St. Joseph Pier 42.1149,-86.488151");
+                message.channel.send("No matching gym found.  If this gym needs to be added, please use .whereisadd or request a moderator add it.");
             }
             break;
         case "whereisadd":
-            console.log(message.user.discriminator);
-            console.log(message.user.avatar);
-            if(args[args.length-1].indexOf(',') > 0){
-                var gymname = '';
-                for(var i = 1; i < args.length-1; i++){
-                    gymname += args[i];
-                    if(i < args.length-2){ gymname += " ";}
+            console.log(message.author.discriminator);
+            var add = false;
+            for(var k = 0; k < canadd.length; k++){
+                if(message.author.discriminator == canadd[k]) {add = true;}
+            }
+            if(add){
+                if(args[args.length-1].indexOf(',') > 0){
+                    var gymname = '';
+                    for(var i = 1; i < args.length-1; i++){
+                        gymname += args[i];
+                        if(i < args.length-2){ gymname += " ";}
+                    }
+                    gyms.push(gymname + ";" + args[args.length-1]);
+                    message.channel.send("Successfully added " + gymname + " at " + args[args.length-1]);
+                    fs.appendFileSync('gyms.txt', "`" + gymname + ";" + args[args.length-1]);
+                    console.log(gyms);                
                 }
-                gyms.push(gymname + ";" + args[args.length-1]);
-                message.channel.send("Successfully added " + gymname + " at " + args[args.length-1]);
-                fs.appendFileSync('gyms.txt', "`" + gymname + ";" + args[args.length-1]);
-                console.log(gyms);                
+                else{
+                    message.channel.send("Coordinates not in recognizable format.  Please use [lat,long] (no spaces) ex: .whereisadd St. Joseph Pier 42.1149,-86.488151");
+                }         
             }
             else{
-                message.channel.send("Coordinates not in recognizable format.  Please use [lat,long] (no spaces) ex: .whereisadd St. Joseph Pier 42.1149,-86.488151");
-            }                
+                message.channel.send("You do not have permission to add gyms.  Please ask a moderator to add this gym.");
+            }       
             break;
         default:
             break;
