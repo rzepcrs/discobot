@@ -62,10 +62,19 @@ bot.on("message", function(message){
                         gymname += args[i];
                         if(i < args.length-2){ gymname += " ";}
                     }
-                    gyms.push(gymname + ";" + args[args.length-1]);
-                    message.channel.send("Successfully added " + gymname + " at " + args[args.length-1]);
-                    fs.appendFileSync('gyms.txt', "`" + gymname + ";" + args[args.length-1]);
-                    console.log(gyms);                
+                    var match = false;
+                    for(var h = 0; h < gyms.length; h++){
+                        if(gyms[h].replace(/\W/g, '').toLowerCase().startsWith(gymname.replace(/\W/g, '').toLowerCase())) {
+                            match = true;
+                            message.channel.send("Gym with name " + gymname + " already found.");
+                        }
+                    }
+                    if(!match){
+                        gyms.push(gymname + ";" + args[args.length-1]);
+                        message.channel.send("Successfully added " + gymname + " at " + args[args.length-1]);
+                        fs.appendFileSync('gyms.txt', "`" + gymname + ";" + args[args.length-1]);
+                        console.log(gyms);      
+                    }          
                 }
                 else{
                     message.channel.send("Coordinates not in recognizable format.  Please use [lat,long] (no spaces) ex: .whereisadd St. Joseph Pier 42.1149,-86.488151");
