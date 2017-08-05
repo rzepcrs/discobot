@@ -49,6 +49,8 @@ bot.on("message", function(message){
             }
             break;
         case "whereisadd":
+            console.log(message.user.discriminator);
+            console.log(message.user.avatar);
             if(args[args.length-1].indexOf(',') > 0){
                 var gymname = '';
                 for(var i = 1; i < args.length-1; i++){
