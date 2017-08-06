@@ -10,7 +10,7 @@ var canadd = ['1169'];
 bot.on("ready", function(){
     var data = '';
 
-    var readStream = fs.createReadStream('gyms.txt', 'utf8');
+    var readStream = fs.createReadStream('http://www.inu-papa.com/game/gyms.txt', 'utf8');
 
     readStream.on('data', function(chunk) {  
         data += chunk;
@@ -72,7 +72,7 @@ bot.on("message", function(message){
                     if(!match){
                         gyms.push(gymname + ";" + args[args.length-1]);
                         message.channel.send("Successfully added " + gymname + " at " + args[args.length-1]);
-                        fs.appendFileSync('gyms.txt', "`" + gymname + ";" + args[args.length-1]);
+                        fs.appendFileSync('http://www.inu-papa.com/game/gyms.txt', "`" + gymname + ";" + args[args.length-1]);
                         console.log(gyms);      
                     }          
                 }
