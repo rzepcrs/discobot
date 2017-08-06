@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
+const http = require("http");
 const TOKEN = "MzQzNDcyOTg2ODA5OTU4NDIw.DGerqw.9uJIKEjNy0MnFeLVatRaLv658BQ";
 const PREFIX = "."
 
@@ -8,9 +9,23 @@ var gyms;
 var canadd = ['1169'];
 
 bot.on("ready", function(){
+    //var url = "http://www.inu-papa.com/game/gyms.txt";
     var data = '';
+    /*http.get(url, function (res) {
+        console.log(res.statusCode);
 
-    var readStream = fs.createReadStream('http://www.inu-papa.com/game/gyms.txt', 'utf8');
+        res.on('data', (chunk) => {
+            data += chunk;
+        });
+        res.on('end', () => {
+            gyms = data.split("`");
+        });
+    }).on('error', (e) => {
+        console.log('Got error: ' + e.message);
+    });*/
+    
+
+    var readStream = fs.createReadStream('gyms.txt', 'utf8');
 
     readStream.on('data', function(chunk) {  
         data += chunk;
@@ -72,7 +87,7 @@ bot.on("message", function(message){
                     if(!match){
                         gyms.push(gymname + ";" + args[args.length-1]);
                         message.channel.send("Successfully added " + gymname + " at " + args[args.length-1]);
-                        fs.appendFileSync('http://www.inu-papa.com/game/gyms.txt', "`" + gymname + ";" + args[args.length-1]);
+                        fs.appendFileSync('gyms.txt', "`" + gymname + ";" + args[args.length-1]);
                         console.log(gyms);      
                     }          
                 }
