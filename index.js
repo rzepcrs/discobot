@@ -45,26 +45,38 @@ bot.on("message", function(message){
         case "ping":
             message.channel.send("Pong!");
             break;
+        case "whereiscount":
+            message.channel.send("I currently have " + gyms.length + " gyms in my database.");
+            break;
+        case "whereishelp":
+            message.channel.send("Type '.whereis [gym name]' to return a map leading to the specified gym.");
+            message.channel.send("Queries are case-insensitive, ignore punctuation, and do not require the full name of the gym");
+            message.channel.send("For example, '.whereis st joseph c' will match 'St. Joseph Catholic Church.");
+            message.channel.send("Gym names are exactly as they are given in-game, including any spelling errors originally present.");
+            message.channel.send("Exceptions are made for gyms with exactly the same name, which are modified to specify the city where they are found to differentiate them.");
         case "whereis":
             var queryname = '';
             var found = false;
             for(var i = 1; i < args.length; i++){
                 queryname += args[i].replace(/\W/g, '').toLowerCase();
             }
-            for(var j = 0; j < gyms.length; j++){
-                if(gyms[j].replace(/\W/g, '').toLowerCase().startsWith(queryname)){
-                    console.log(gyms[j]);
-                    var gymargs = gyms[j].split(";");
-                    var location = gymargs[0] + ": " + "https://www.google.com/maps/dir/Current+Location/" + gymargs[1];
-                    message.channel.send(location);
-                    found = true;
+            if(queryname.length > 0 && args.length > 1){
+                for(var j = 0; j < gyms.length; j++){
+                    if(gyms[j].replace(/\W/g, '').toLowerCase().startsWith(queryname)){
+                        console.log(gyms[j]);
+                        var gymargs = gyms[j].split(";");
+                        var location = gymargs[0] + ": " + "https://www.google.com/maps/dir/Current+Location/" + gymargs[1];
+                        message.channel.send(location);
+                        found = true;
+                    }
                 }
-            }
-            if(!found){
-                message.channel.send("No matching gym found.  If this gym needs to be added, please use .whereisadd or request a moderator add it.");
-            }
+                if(!found){
+                message.channel.send("No matching gym found.  If this gym needs to be added, please request a moderator add it.");
+                }
+            }            
             break;
         case "whereisadd":
+            //Only usable if gyms.txt is in a writable location
             console.log(message.author.discriminator);
             var add = false;
             for(var k = 0; k < canadd.length; k++){
