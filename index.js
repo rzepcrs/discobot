@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const http = require("http");
-const TOKEN = "MzQzNDcyOTg2ODA5OTU4NDIw.DJ7EuA.UOCrkzKxu7kp3LvGPDu6uC1O49s";//"MzQzNDcyOTg2ODA5OTU4NDIw.DGerqw.9uJIKEjNy0MnFeLVatRaLv658BQ";
+var TOKEN = "MzkyMTAwMjg2Mzg4NTAyNTMx.";
+//"MzQzNDcyOTg2ODA5OTU4NDIw.DGerqw.9uJIKEjNy0MnFeLVatRaLv658BQ";
 const PREFIX = "."
 
 var bot = new Discord.Client();
@@ -24,7 +25,7 @@ bot.on("ready", function(){
         console.log('Got error: ' + e.message);
     });*/
     
-
+    console.log("started");
     var readStream = fs.createReadStream('gyms.txt', 'utf8');
 
     readStream.on('data', function(chunk) {  
@@ -115,5 +116,7 @@ bot.on("message", function(message){
             break;
     }
 });
-
+const TOKEN2 = "DRiTXw.ik6A2G-TWnv8H5XU6YS7ek9vr2g"
+TOKEN = TOKEN + TOKEN2;
+console.log(TOKEN);
 bot.login(TOKEN);
