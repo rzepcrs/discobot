@@ -31,7 +31,7 @@ bot.on("ready", function(){
     readStream.on('data', function(chunk) {  
         data += chunk;
     }).on('end', function() {
-        gyms = data.split("`");
+        gyms = data.split("\n");
     });
 });
 
