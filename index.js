@@ -55,6 +55,7 @@ bot.on("message", function(message){
             message.channel.send("For example, '.whereis st joseph c' will match 'St. Joseph Catholic Church.");
             message.channel.send("Gym names are exactly as they are given in-game, including any spelling errors originally present.");
             message.channel.send("Exceptions are made for gyms with exactly the same name, which are modified to specify the city where they are found to differentiate them.");
+            message.channel.send("Get a LocationBot for your own community here: https://docs.google.com/document/d/1aOwRIHl54Ui5_zebaymdhTuJlKT2H5GH6sh8t7bWDa8/edit#");
         case "whereis":
             var queryname = '';
             var found = false;
