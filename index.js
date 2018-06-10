@@ -117,7 +117,7 @@ bot.on("message", function(message){
             break;
     }
 });
-const TOKEN2 = "DRiTXw.ik6A2G-TWnv8H5XU6YS7ek9vr2g"
+const TOKEN2 = "Df8DYg.Of_Fp3Onpbv2VE1HpZ3F643AnBk"
 TOKEN = TOKEN + TOKEN2;
 console.log(TOKEN);
 bot.login(TOKEN);
