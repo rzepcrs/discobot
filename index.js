@@ -1,13 +1,14 @@
 const Discord = require("discord.js");
 const fs = require("fs");
 const http = require("http");
-var TOKEN = "MzkyMTAwMjg2Mzg4NTAyNTMx.";
+var TOKEN = "NJA1TJq0TJEeSficTJmcSZS4.Jl8fec.AMBocxsFVPrfGakvoELCGnErUHG";
 //"MzQzNDcyOTg2ODA5OTU4NDIw.DGerqw.9uJIKEjNy0MnFeLVatRaLv658BQ";
 const PREFIX = "."
 
 var bot = new Discord.Client();
 var gyms;
 var canadd = ['1169'];
+var rotlen = 6;
 
 bot.on("ready", function(){
     //var url = "http://www.inu-papa.com/game/gyms.txt";
@@ -33,6 +34,7 @@ bot.on("ready", function(){
     }).on('end', function() {
         gyms = data.split("\n");
     });
+    
 });
 
 bot.on("message", function(message){
@@ -117,7 +119,31 @@ bot.on("message", function(message){
             break;
     }
 });
-const TOKEN2 = "Df8DYg.Of_Fp3Onpbv2VE1HpZ3F643AnBk"
-TOKEN = TOKEN + TOKEN2;
-console.log(TOKEN);
+
+function rot(c){
+    var inputSize = c.length;
+    var index = 1;
+    var newc = c.charAt(0);
+    while(index != inputSize) {
+        if(c.charCodeAt(index) >= 97 && c.charCodeAt(index) <= 97+rotlen-1)
+            newc += String.fromCharCode(c.charCodeAt(index) + 26-rotlen);
+        else if(c.charCodeAt(index) >= 97+rotlen && c.charCodeAt(index) <= 122)
+            newc += String.fromCharCode(c.charCodeAt(index) - rotlen);
+        else if(c.charCodeAt(index) >= 65 && c.charCodeAt(index) <= 65+rotlen-1)
+            newc += String.fromCharCode(c.charCodeAt(index) + 26-rotlen);
+        else if(c.charCodeAt(index) >= 65+rotlen && c.charCodeAt(index) <= 90)
+            newc += String.fromCharCode(c.charCodeAt(index) - rotlen);
+        else
+            newc += c.charAt(index);
+
+        index++;
+        //console.log(newc);
+    }
+    return newc;
+}
+
+//const TOKEN2 = "Df8DYg.Of_Fp3Onpbv2VE1HpZ3F643AnBk"
+//TOKEN = TOKEN + TOKEN2;
+TOKEN = rot(TOKEN);
+//console.log(TOKEN);
 bot.login(TOKEN);
